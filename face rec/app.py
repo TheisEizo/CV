@@ -1,14 +1,17 @@
 import cv2
 from datetime import datetime
 
-def findAndCaptureFaces():
+def findAndCaptureFaces() -> None: 
     cap = cv2.VideoCapture(0)
     face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
     eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
     
-    while(True):
+    while True:
         ret, frame_org = cap.read()
-        frame = frame_org.copy()
+        try: 
+            frame = frame_org.copy()
+        except AttributeError:
+            raise AttributeError("Webcam not usable at the moment. Is it being used elsewhere?")
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         
         faces = face_cascade.detectMultiScale(gray)
@@ -32,3 +35,6 @@ def findAndCaptureFaces():
     
     cap.release()
     cv2.destroyAllWindows()
+
+if __name__ == '__main__':
+    findAndCaptureFaces()

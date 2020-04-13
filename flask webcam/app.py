@@ -10,7 +10,7 @@ def index():
 def gen(camera):
     while True:
         ret, frame = camera.read()
-        cv2.imwrite('temp_video_feed.jpg', cv2.flip(frame, 1))
+        cv2.imwrite('temp_video_feed.jpg', frame)
         yield (b'--frame\r\n' 
               b'Content-Type: image/jpeg\r\n\r\n' 
                   + open('temp_video_feed.jpg', 'rb').read() 
